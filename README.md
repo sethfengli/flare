@@ -2,13 +2,12 @@
 
 ## Development and Test Environment
 
-  Operating System      Windows 10  
+  - Only operating System Windows 10 has been tested
   
-  IDE and Test toool    Visual Studio 2019    https://visualstudio.microsoft.com/downloads/  
+  - IDE and Test tool:Visual Studio 2019, you can download it from https://visualstudio.microsoft.com/downloads/  
   
-  .Net core 3.1         .NET Core 3.1 SDK     https://dotnet.microsoft.com/download/visual-studio-sdks  
-  
-  
+  - .NET Core 3.1 SDK is required, you can download it from https://dotnet.microsoft.com/download/visual-studio-sdks  
+    
 ## After cloned the code from https://github.com/sethfengli/flare.git
   
  - Use Visual Studio 2019 to open BattleshipStateTracker.sln solution file in your working folder
