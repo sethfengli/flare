@@ -12,13 +12,13 @@ namespace BattleshipStateTracker
 
         public IAddShipsToBoard AddShipsFrom { get; set; }
 
-        public IReport ReportTo { get; set; }
+        public IReporter ReportTool { get; set; }
 
         public Player()
         {
             Name = "Code Challenge";
             Opponent = null;        
-            ReportTo =new Report();
+            ReportTool =new Reporter();
             CreateBoard();
             AddShipsFrom = new AddShipToBoardSample();
         }
@@ -26,7 +26,7 @@ namespace BattleshipStateTracker
         public void CreateBoard()
         {
             PlayBoard = new BattleshipBoard();
-            PlayBoard.ReportTo = ReportTo;
+            PlayBoard.ReportTool = ReportTool;
         }
 
         public bool AddShipsToBoard()
@@ -47,15 +47,14 @@ namespace BattleshipStateTracker
 
         public bool IsLostGame()
         {
-            return ( PlayBoard.IsBoardReadyToPlay && PlayBoard.AllShipsSunk() );
+            return ( PlayBoard.IsBoardReadyToPlay && PlayBoard.CheckAllShipsSunkOnPlayBoard() );
         }
-
         public void ReportPlayBoardState()
         {
             if (PlayBoard.IsBoardReadyToPlay)
                 PlayBoard.ReportBoardState();
             else
-                ReportTo.WriteLine("Playboard is not ready yet.");
+                ReportTool.WriteLine("Playboard is not ready yet.");
         }
 
     }

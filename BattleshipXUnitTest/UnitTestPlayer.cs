@@ -18,7 +18,7 @@ namespace BattleshipStateTracker
         }
 
         [Fact]
-        public void PlayBoardImportTest()
+        public void PlayBoardImportSampleTest()
         {
             Player player = new Player();
 
@@ -30,7 +30,7 @@ namespace BattleshipStateTracker
         }
 
         [Fact]
-        public void PlayBoardImportFromFile()
+        public void PlayBoardImportFromJSONFile()
         {
             Player player = new Player();
 
@@ -43,7 +43,7 @@ namespace BattleshipStateTracker
         }
         
         [Fact]
-        public void BoardAttackTest()
+        public void TakeAnAttackTest()
         {
             Player player = new Player();
 
@@ -62,7 +62,7 @@ namespace BattleshipStateTracker
         }
 
         [Fact]
-        public void IsLostTest()
+        public void IsLostGameTest()
         {
             Player player = new Player();
 

@@ -9,7 +9,7 @@ namespace BattleshipStateTracker
     {
 
         [Fact]
-        public void BoardAddShip()
+        public void AddAShipToBoardTest()
         {
             BattleshipBoard board = new BattleshipBoard();
 
@@ -22,7 +22,7 @@ namespace BattleshipStateTracker
         }
 
         [Fact]
-        public void BoardAddShipAdnSinkIt()       
+        public void AddAShipToBoardAdnSinkIt()       
         {
             BattleshipBoard board = new BattleshipBoard();
             var shipNumber = 100;
@@ -45,11 +45,9 @@ namespace BattleshipStateTracker
                        
             Assert.True(result, "Add a ship to board  and Sink it");
         }
-
-
-
+                
         [Fact]
-        public void BoardImportTest()
+        public void BoardImportSampleTest()
         {
             BattleshipBoard board = new BattleshipBoard();
             AddShipToBoardSample importBoard = new AddShipToBoardSample();
@@ -59,7 +57,7 @@ namespace BattleshipStateTracker
         }
 
         [Fact]
-        public void BoardImportFromFile()
+        public void BoardImportFromJSONFile()
         {
             BattleshipBoard board = new BattleshipBoard();
             AddShipsFromJsonFile importBoard = new AddShipsFromJsonFile("board.json");
@@ -70,7 +68,7 @@ namespace BattleshipStateTracker
 
 
         [Fact]
-        public void BoardAttackTest()
+        public void BoardCellAttackedTest()
         {
             BattleshipBoard board = new BattleshipBoard();
             AddShipToBoardSample importBoard = new AddShipToBoardSample();
@@ -87,7 +85,7 @@ namespace BattleshipStateTracker
         }
 
         [Fact]
-        public void IsLostTest()
+        public void CheckAllShipsSunkOnPlayBoardTest()
         {
             BattleshipBoard board = new BattleshipBoard();
             AddShipsToBoardForLostTest importBoard = new AddShipsToBoardForLostTest();
@@ -106,7 +104,7 @@ namespace BattleshipStateTracker
             if (result)
             {
                 // Hit and lost
-                result = board.AllShipsSunk();
+                result = board.CheckAllShipsSunkOnPlayBoard();
             }
 
             Assert.True(result, "Lost");

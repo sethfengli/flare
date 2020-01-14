@@ -4,13 +4,13 @@ using System.Text;
 
 namespace BattleshipStateTracker
 {
-    public interface IReport
+    public interface IReporter
     {
         void Write(string log);
         void WriteLine(string log);
 
     }
-    public class Report : IReport
+    public class Reporter : IReporter
     {
         public void Write (string log)
         {

@@ -53,6 +53,19 @@ namespace BattleshipStateTracker
             Assert.True(result, $"Battleship: ShipNumber={ship.ShipNumber} IsValidDeployment={result} ");
 
         }
+
+        [Fact]
+        public void BattleshipTest3()
+        {
+
+            Battleship ship = new Battleship(5);
+            ship.SetupDeployment(new List<(int, int)> { (3, 1), (3, 2), (4, 3), (3, 4) });
+
+            var result = (ship.ShipNumber == 5 && ship.IsValidDeployment());
+            Assert.False(result, $"Battleship: ShipNumber={ship.ShipNumber} IsValidDeployment={result} ");
+
+        }
+
     }
     
 }

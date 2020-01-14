@@ -56,7 +56,6 @@ namespace BattleshipStateTracker
             return Board;
         }             
     }
-
     public class AddShipsFromJsonFile : IAddShipsToBoard
     {
         public int[,] Board { get; set; }

@@ -9,22 +9,28 @@ namespace BattleshipStateTracker
         private const int boardSize = 10;
         public BoardCell[,] Board { get; set; }
         public Dictionary<int, Battleship> BattleShips { get; set; }
-        public IReport ReportTo { get; set; }
+        public IReporter ReportTool { get; set; }
 
         public bool IsBoardReadyToPlay { get; set; }
 
         public BattleshipBoard()
         {
+            CreateBattleshipBoard();
+        }
+        
+        public void CreateBattleshipBoard()
+        {
             BattleShips = new Dictionary<int, Battleship>();
             Board = new BoardCell[boardSize, boardSize];
             IsBoardReadyToPlay = false;
-            InitializeBoard();
-            ReportTo = new Report();            // setup default export as console output
-        }
-        public CoordinateState GetBoardCellState(Coordinate location)
-        {
-            return Board[location.X, location.Y].State;
-
+            ReportTool = new Reporter();            // setup default export as console output
+            for (var x = 0; x < boardSize; x++)
+            {
+                for (var y = 0; y < boardSize; y++)
+                {
+                    Board[x, y] = new BoardCell(0, CoordinateState.INITIAL);
+                }
+            }
         }
 
         public Boolean ToCheckShipIsSunk(Battleship ship)
@@ -33,7 +39,7 @@ namespace BattleshipStateTracker
             {
                 foreach (Coordinate location in ship.Deployment)
                 {
-                    if (GetBoardCellState(location) != CoordinateState.HIT)
+                    if (Board[location.X, location.Y].State != CoordinateState.HIT)
                         return false; // ship.IsSunk didn't change
                 }
                 ship.IsSunk = true; // A battleship is sunk if it has been hit on all the squares it occupies
@@ -45,15 +51,15 @@ namespace BattleshipStateTracker
         {
             BoardCell cell = Board[location.X, location.Y];
             if (cell.ShipNumber > 0)
-                ReportTo.WriteLine($" Type: {type} {location} {cell}");
+                ReportTool.WriteLine($" Type: {type} {location} {cell}");
             else
-                ReportTo.WriteLine($" Type: {type} {location} ");         // shipNumber <=0 should be treated as exception
+                ReportTool.WriteLine($" Type: {type} {location} ");         // shipNumber <=0 should be treated as exception
         }
         public int BoardCellAttacked(Coordinate location)
         {
             if (location.X < 0 || location.X > boardSize || location.Y < 0 || location.Y > boardSize)
             {
-                ReportTo.WriteLine($" Type: Wrong Position {location} ");
+                ReportTool.WriteLine($" Type: Wrong Position {location} ");
                 return -1;
             }
 
@@ -82,30 +88,6 @@ namespace BattleshipStateTracker
             return cell.ShipNumber;
         }
 
-        public void InitializeBoard()
-        {
-            for (var x = 0; x < boardSize; x++)
-            {
-                for (var y = 0; y < boardSize; y++)
-                {
-                    Board[x, y] = new BoardCell(0, CoordinateState.INITIAL);
-                }
-            }
-        }
-         
-        public void ReportBoardState()
-        {
-            for (var x = 0; x < boardSize; x++)
-            {
-                for (var y = 0; y < boardSize; y++)
-                {
-                    BoardCell cell = Board[x, y];
-
-                    ReportTo.Write($"{cell.State.ToString().Substring(0,3)} ");
-                }
-                ReportTo.WriteLine("");
-            }
-        }
 
         public Boolean AddAShipToBoard(Battleship ship)
         {
@@ -113,19 +95,19 @@ namespace BattleshipStateTracker
 
             if (BattleShips.ContainsKey(ship.ShipNumber))
             {
-                ReportTo.WriteLine("ShipNumber is already in board.");
+                ReportTool.WriteLine("ShipNumber is already in board.");
                 return false;
             }
 
             if (ship.Deployment.Count > boardSize || ship.Deployment.Count <= 0)
             {
-                ReportTo.WriteLine("Ship must fit entirely on the board");
+                ReportTool.WriteLine("Ship must fit entirely on the board");
                 return false;
             }
             
             if (!ship.IsValidDeployment())
             {
-                ReportTo.WriteLine("The ship should be 1-by-n sized");
+                ReportTool.WriteLine("The ship should be 1-by-n sized");
                 return false;
             }
             
@@ -133,7 +115,7 @@ namespace BattleshipStateTracker
             foreach ( Coordinate location in ship.Deployment)
                 if (Board[location.X, location.Y].State == CoordinateState.OCCUPIED)
                 {
-                    ReportTo.WriteLine("Ship can't overlap another ship. {location}");
+                    ReportTool.WriteLine("Ship can't overlap another ship. {location}");
                     return false;
                 }
 
@@ -187,7 +169,7 @@ namespace BattleshipStateTracker
             return true;
         }
 
-        public bool AllShipsSunk()
+        public bool CheckAllShipsSunkOnPlayBoard()
         {
             foreach(int shipNumber in BattleShips.Keys)
             {
@@ -195,7 +177,20 @@ namespace BattleshipStateTracker
                     return false;
             }
             return true;
-        } 
+        }
+        public void ReportBoardState()
+        {
+            for (var x = 0; x < boardSize; x++)
+            {
+                for (var y = 0; y < boardSize; y++)
+                {
+                    BoardCell cell = Board[x, y];
+
+                    ReportTool.Write($"{cell.State.ToString().Substring(0, 3)} ");
+                }
+                ReportTool.WriteLine("");
+            }
+        }
 
     }
 }
