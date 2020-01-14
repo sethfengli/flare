@@ -9,15 +9,15 @@
   .Net core 3.1         .NET Core 3.1 SDK     https://dotnet.microsoft.com/download/visual-studio-sdks  
   
   
-## git clone the code from https://github.com/sethfengli/flare.git to your working folder
+## After cloned the code from https://github.com/sethfengli/flare.git
   
- - Use Visual Studio 2019 open to BattleshipStateTracker.sln solution file  
+ - Use Visual Studio 2019 to open BattleshipStateTracker.sln solution file in your working folder
  
  - Project BattleshipStateTracker is the main repository  
  
  - Project BattleshipXUnitTest is the unit test repository  
   
-#### Please let me know if you have any question about the code, my email address is sethfengli@yahoo.com.au
+#### Please let me(sethfengli@yahoo.com.au) know if you have any questions about this project
 
   
 
